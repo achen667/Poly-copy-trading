@@ -61,14 +61,20 @@ async function replicateOrder(order: PolymarketTrade,clobClient: ClobClient) {
             console.log('Order skipped: price under/above 0.02/0.98:', askPrice);
             break;
           }
+ 
           //Using max 1$
           if(askPrice * size >= 1){
             orderParams.size = 1.06 / askPrice;
           }  
-
+          
+          //[special condition]
+          if(askPrice*size <1000){
+            console.log('Order skipped: value under 1000:', askPrice * size)
+            break;
+          }
           //add targe user share amount
 
-
+          console.log('Target order:',order);
           console.log('Order args:', orderParams);
           const signedOrder = await clobClient.createOrder(orderParams);
           // const signedOrder = await clobClient.createMarketOrder(orderParams);

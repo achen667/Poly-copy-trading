@@ -99,6 +99,7 @@ async function main() {
 
           if (newOrder.timestamp > thirtySecondsAgo) {
             console.log(`Replicating recent order (${newOrder.timestamp} > ${thirtySecondsAgo}): ${newOrder.transactionHash}`);
+            console.log(`Target Order - Side: ${newOrder.side}, Asset: ${newOrder.asset}, Price: ${newOrder.price}, Size: ${newOrder.size}`);
             await replicateOrder(newOrder,client);
           } else {
             console.log(`Order is too old (>30s): ${newOrder.timestamp} <= ${thirtySecondsAgo}`);
